@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Escuela de Ciencias y Sistemas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    </head>
+    <body>
+    <div class="container register-container">
+        <div class="card p-4 col-md-6 text-center">
+        <img src="https://portal.usac.edu.gt/wp-content/uploads/2022/08/tricentenaria-2019-color-solo.png" 
+            alt="Logo Facultad de Ingeniería USAC" 
+            class="logo mx-auto d-block">
+        <h3>Registro de Usuario</h3>
+        <p class="text-muted">Escuela de Ciencias y Sistemas - FIUSAC</p>
+
+        <form>
+            <div class="form-group mb-3 text-start">
+            <label for="registro">Registro Académico</label>
+            <input type="text" id="registro"  class="form-control" placeholder="Ej: 202100123">
+            </div>
+            <div class="row">
+            <div class="col-md-6 mb-3 text-start">
+                <label for="nombres">Nombres</label>
+                <input type="text" id="nombres"  class="form-control" placeholder="Tus nombres">
+            </div>
+            <div class="col-md-6 mb-3 text-start">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" class="form-control" placeholder="Tus apellidos">
+            </div>
+            </div>
+            <div class="form-group mb-3 text-start">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo"  class="form-control" placeholder="ejemplo@usac.edu.gt">
+            </div>
+            <div class="form-group mb-3 text-start">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password"  class="form-control" placeholder="Crea una contraseña">
+            </div>
+            <div class="d-grid gap-2 mt-3">
+            <button type="submit"  class="btn btn-primary">Registrarse</button>
+            <a href="/login"  class="btn btn-outline-secondary">Volver al Login</a>
+            </div>
+        </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
