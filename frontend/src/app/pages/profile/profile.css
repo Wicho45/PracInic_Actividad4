@@ -19,6 +19,9 @@ body, html {
     .navbar .nav-link:hover {
         text-decoration: underline;
     }
+    .navbar-toggler {
+        border-color: rgba(255,255,255,0.5);
+    }
 .profile-section {
         margin-top: 30px;
     }
@@ -80,7 +83,20 @@ body, html {
     box-shadow: 0 0 15px #00509e;
     }
     
-    
+    .course-list {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+    .course-list li {
+        background: #f8f9fa;
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+    .course-list li strong {
+        color: #003366;
+    }
     @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
