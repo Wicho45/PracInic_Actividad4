@@ -1,0 +1,103 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://emi.ingenieria.usac.edu.gt/wp-content/uploads/2016/11/fiusac03.jpg') no-repeat center center fixed;
+    background-size: cover;
+    }
+
+.navbar {
+    background-color: #003366;
+    }
+    .navbar-brand, .nav-link, .navbar-text {
+    color: white !important;
+    }
+    .navbar-brand, .nav-link {
+        color: white !important;
+        font-weight: 500;
+    }
+    .navbar .nav-link:hover {
+        text-decoration: underline;
+    }
+    .navbar-toggler {
+        border-color: rgba(255,255,255,0.5);
+    }
+.profile-section {
+        margin-top: 30px;
+    }
+    .profile-section h4 {
+        color: #003366;
+    }
+    .form-label {
+        font-weight: bold;
+        color: #003366;
+    }
+.bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    }
+    
+    
+    .login-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vh;
+    }
+.card {
+    border-radius: 20px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.6);
+    background: rgba(255, 255, 255, 0.95);
+    animation: fadeIn 1s ease-in-out;
+    }
+    
+    
+    .logo {
+    max-width: 250px;
+    margin-bottom: 30px;
+    }
+    
+    
+    h3 {
+    color: #003366;
+    font-weight: bold;
+    }
+    
+    
+    .btn-primary {
+    background-color: #003366;
+    border: none;
+    transition: 0.3s;
+    }
+    
+    
+    .btn-primary:hover {
+    background-color: #00509e;
+    box-shadow: 0 0 15px #00509e;
+    }
+    
+    .course-list {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+    .course-list li {
+        background: #f8f9fa;
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+    .course-list li strong {
+        color: #003366;
+    }
+    @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
