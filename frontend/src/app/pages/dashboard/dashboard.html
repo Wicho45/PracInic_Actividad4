@@ -1,1 +1,114 @@
-<p>dashboard works!</p>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Publicación - FIUSAC ECS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">FIUSAC - ECS</a>
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/layout">Pantalla Inicial</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/dashboard">Crear Publicación</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">Ver Perfil</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    <!-- Crear Publicación -->
+    <div class="container mt-4">
+        <div class="card p-4">
+        <h4 class="mb-3">Crear Nueva Publicación</h4>
+        <form>
+            <!-- Usuario (solo lectura) -->
+            <div class="form-group mb-3">
+            <label for="usuario">Usuario que realiza la publicación</label>
+            <input type="text" id="usuario" class="form-control" value="Juan Pérez (usuario logueado)" readonly>
+            </div>
+
+            <!-- Selección entre Curso o Catedrático -->
+            <div class="form-group mb-3">
+            <label for="tipoPublicacion">Seleccionar tipo de publicación</label>
+            <select class="form-select" id="tipoPublicacion" onchange="mostrarOpciones()">
+                <option value="">-- Seleccionar --</option>
+                <option value="curso">Curso</option>
+                <option value="catedratico">Catedrático</option>
+            </select>
+            </div>
+
+            <!-- Combobox dinámico según selección -->
+            <div class="form-group mb-3 d-none" id="comboEspecifico">
+            <label id="comboLabel" for="comboSelect"></label>
+            <select id="comboSelect" class="form-select">
+                <option>-- Seleccionar --</option>
+            </select>
+            </div>
+
+            <!-- Mensaje -->
+            <div class="form-group mb-3">
+            <label for="mensaje">Mensaje de la Publicación</label>
+            <textarea id="mensaje" class="form-control" rows="4" placeholder="Escribe tu publicación aquí..."></textarea>
+            </div>
+
+            <!-- Fecha -->
+            <div class="form-group mb-3">
+            <label for="fecha">Fecha de creación</label>
+            <input type="date" id="fecha" class="form-control">
+            </div>
+
+            <!-- Botón -->
+            <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Publicar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function mostrarOpciones() {
+        const tipo = document.getElementById("tipoPublicacion").value;
+        const combo = document.getElementById("comboEspecifico");
+        const label = document.getElementById("comboLabel");
+        const select = document.getElementById("comboSelect");
+
+        // Reiniciar
+        combo.classList.add("d-none");
+        select.innerHTML = "<option>-- Seleccionar --</option>";
+
+        if (tipo === "curso") {
+            label.innerText = "Seleccionar Curso";
+            select.innerHTML += `
+            <option>Matemática Básica 1</option>
+            <option>Programación 1</option>
+            <option>Física 2</option>
+            <option>Algoritmos</option>`;
+            combo.classList.remove("d-none");
+        } else if (tipo === "catedratico") {
+            label.innerText = "Seleccionar Catedrático";
+            select.innerHTML += `
+            <option>Ing. Pérez</option>
+            <option>Ing. López</option>
+            <option>Ing. Ramírez</option>`;
+            combo.classList.remove("d-none");
+        }
+        }
+    </script>
+    </body>
+</html>

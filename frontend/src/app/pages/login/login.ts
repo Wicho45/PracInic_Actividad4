@@ -11,6 +11,8 @@ import { RouterModule, Router } from '@angular/router';
   styleUrl: './login.css'
 })
 export class Login {
+  router = inject(Router);
+
   // loginForm: FormGroup = new FormGroup({
   //   CorreoId: new FormControl(""),
   //   Password: new FormControl("")
@@ -22,4 +24,9 @@ export class Login {
   //   const formValue = this.loginForm.value;
   //   this.http.post("", formValue)
   // }
+
+  goToLayout(){
+    this.router.navigate(['/layout']);
+  }
+
 }

@@ -4,6 +4,7 @@ import { Layout } from './pages/layout/layout';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Sigin } from './pages/sigin/sigin';
 import { Restore } from './pages/restore/restore';
+import { Profile } from './pages/profile/profile';
 
 export const routes: Routes = [
     {
@@ -19,10 +20,12 @@ export const routes: Routes = [
         path: 'restore', component: Restore
     },
     {
-        path: '', component:Layout, children: [
-            {
-                path: 'dashboard', component: Dashboard
-            }
-        ]
-    }
+        path: 'dashboard', component: Dashboard
+    },
+    {
+        path: 'layout', component:Layout
+    },
+    {
+        path: 'profile', component: Profile
+    },
 ];
