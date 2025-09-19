@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
+const userController = require('../controllers/userController');
+
+// Ruta de login
+router.post('/login', userController.login);
+
+// Ruta de prueba
+router.get('/test', userController.testConnection);
 
 // LOGIN
 router.post('/login', (req, res) => {

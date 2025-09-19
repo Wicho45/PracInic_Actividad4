@@ -1,64 +1,80 @@
-const User = require('../models/userModel');
+const db = require('../config/database');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-exports.getAllUsers = (req, res) => {
-  User.getAll((error, results) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
+// Controlador para login
+exports.login = async (req, res) => {
+    try {
+        const { Correo, Contrasena } = req.body;
+        
+        console.log('Intento de login para:', Correo);
+        
+        // Verificar si el usuario existe
+        const query = 'SELECT * FROM usuarios WHERE Correo = ?';
+        db.query(query, [Correo], async (error, results) => {
+            if (error) {
+                console.error('Error en consulta:', error);
+                return res.status(500).json({ 
+                    success: false, 
+                    message: 'Error del servidor' 
+                });
+            }
+            
+            if (results.length === 0) {
+                return res.status(401).json({ 
+                    success: false, 
+                    message: 'Correo o contraseña incorrectos' 
+                });
+            }
+            
+            const user = results[0];
+            
+            // Verificar contraseña
+            const isPasswordValid = await bcrypt.compare(Contrasena, user.Contrasena);
+            
+            if (!isPasswordValid) {
+                return res.status(401).json({ 
+                    success: false, 
+                    message: 'Correo o contraseña incorrectos' 
+                });
+            }
+            
+            // Generar token JWT
+            const token = jwt.sign(
+                { 
+                    id: user.id, 
+                    email: user.Correo 
+                }, 
+                process.env.JWT_SECRET, 
+                { expiresIn: '1h' }
+            );
+            
+            // Devolver respuesta exitosa
+            res.json({
+                success: true,
+                message: 'Login exitoso',
+                user: {
+                    id: user.id,
+                    nombre: user.Nombre,
+                    correo: user.Correo,
+                    rol: user.Rol
+                },
+                token: token
+            });
+        });
+    } catch (error) {
+        console.error('Error en login:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error del servidor' 
+        });
     }
-    res.json(results);
-  });
 };
 
-exports.getUserById = (req, res) => {
-  const id = req.params.id;
-  User.getById(id, (error, results) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    if (results.length === 0) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-    res.json(results[0]);
-  });
-};
-
-exports.createUser = (req, res) => {
-  const userData = req.body;
-  User.create(userData, (error, results) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    res.status(201).json({ id: results.insertId, ...userData });
-  });
-};
-
-// ✅ MÉTODO NUEVO - UPDATE
-exports.updateUser = (req, res) => {
-  const id = req.params.id;
-  const userData = req.body;
-  
-  User.update(id, userData, (error, results) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-    res.json({ message: 'Usuario actualizado correctamente', id: id });
-  });
-};
-
-// ✅ MÉTODO NUEVO - DELETE
-exports.deleteUser = (req, res) => {
-  const id = req.params.id;
-  
-  User.delete(id, (error, results) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-    res.json({ message: 'Usuario eliminado correctamente' });
-  });
+// Controlador para prueba de conexión
+exports.testConnection = (req, res) => {
+    res.json({ 
+        success: true, 
+        message: 'Conexión exitosa con el backend en puerto 3001' 
+    });
 };
