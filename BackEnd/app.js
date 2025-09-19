@@ -208,6 +208,124 @@ app.get("/api", (req, res) => {
   });
 });
 
+// ---------------- OBTENER PUBLICACIONES (ADAPTADO A TU ESQUEMA) ----------------
+app.get("/api/publicaciones", (req, res) => {
+  const query = `
+    SELECT 
+      p.ID_Publicacion,
+      p.Mensaje,
+      p.Fecha,
+      p.Correo,
+      p.ID_Profesor,
+      a.Nombre as Nombre_Usuario,
+      a.Apellido as Apellido_Usuario,
+      prof.Nombre as Nombre_Profesor,
+      prof.Apellido as Apellido_Profesor,
+      c.Nombre as Nombre_Curso,
+      c.ID_Curso
+    FROM publicacion p
+    LEFT JOIN usuario u ON p.Correo = u.Correo
+    LEFT JOIN alumno a ON u.Correo = a.Correo
+    LEFT JOIN profesor prof ON p.ID_Profesor = prof.ID_Profesor
+    LEFT JOIN curso c ON p.ID_Curso = c.ID_Curso
+    ORDER BY p.Fecha DESC
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error obteniendo publicaciones:", err);
+      return res.status(500).json({ error: "Error del servidor al obtener publicaciones" });
+    }
+    
+    // Para tu esquema, los comentarios están en una tabla separada pero no relacionada directamente
+    // con publicaciones, así que devolvemos las publicaciones sin comentarios
+    const publicaciones = results.map(publicacion => ({
+      ...publicacion,
+      // Como no hay relación directa, no podemos obtener comentarios fácilmente
+      comentarios: []
+    }));
+    
+    res.json(publicaciones);
+  });
+});
+
+// ---------------- CREAR PUBLICACIÓN ----------------
+app.post("/api/publicaciones", (req, res) => {
+  const { correo, mensaje, id_profesor, id_curso } = req.body;
+
+  if (!correo || !mensaje) {
+    return res.status(400).json({ error: "Correo y mensaje son requeridos" });
+  }
+
+  const query = `
+    INSERT INTO publicacion (Correo, ID_Profesor, Mensaje, Fecha, ID_Curso)
+    VALUES (?, ?, ?, CURDATE(), ?)
+  `;
+
+  db.query(query, [correo, id_profesor || null, mensaje, id_curso || null], (err, result) => {
+    if (err) {
+      console.error("Error creando publicación:", err);
+      return res.status(500).json({ error: "Error del servidor al crear publicación" });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: "Publicación creada exitosamente",
+      id: result.insertId 
+    });
+  });
+});
+
+// ---------------- OBTENER CURSOS ----------------
+app.get("/api/cursos", (req, res) => {
+  const query = "SELECT ID_Curso, Nombre, Creditos FROM curso ORDER BY Nombre";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error obteniendo cursos:", err);
+      return res.status(500).json({ error: "Error del servidor" });
+    }
+    res.json(results);
+  });
+});
+
+// ---------------- OBTENER PROFESORES ----------------
+app.get("/api/profesores", (req, res) => {
+  const query = "SELECT ID_Profesor, Nombre, Apellido FROM profesor ORDER BY Nombre";
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error obteniendo profesores:", err);
+      return res.status(500).json({ error: "Error del servidor" });
+    }
+    res.json(results);
+  });
+});
+
+// ---------------- OBTENER COMENTARIOS (SI LOS HUBIERA) ----------------
+// Nota: En tu esquema actual, los comentarios no están relacionados con publicaciones
+// Esta función es por si decides agregar la relación después
+app.get("/api/comentarios", (req, res) => {
+  const query = `
+    SELECT 
+      c.*,
+      a.Nombre,
+      a.Apellido,
+      a.Correo
+    FROM comentarios c
+    LEFT JOIN alumno a ON c.Registro_Academico = a.Registro_Academico
+    ORDER BY c.Fecha_Calificacion DESC
+  `;
+  
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error obteniendo comentarios:", err);
+      return res.status(500).json({ error: "Error del servidor" });
+    }
+    res.json(results);
+  });
+});
+
 // ---------------- MANEJO DE ERRORES ----------------
 app.use((err, req, res, next) => {
   console.error('Error no manejado:', err);
