@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema praini
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `praini` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE SCHEMA IF NOT EXISTS `praini` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci ;
 USE `praini` ;
 
 -- -----------------------------------------------------
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`usuario` (
   PRIMARY KEY (`Correo`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`alumno` (
     REFERENCES `praini`.`usuario` (`Correo`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`curso` (
     REFERENCES `praini`.`alumno` (`Registro_Academico`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`aprobadas` (
     REFERENCES `praini`.`curso` (`ID_Curso`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`profesor` (
     REFERENCES `praini`.`usuario` (`Correo`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`comentarios` (
     REFERENCES `praini`.`alumno` (`Registro_Academico`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`publicacion` (
     REFERENCES `praini`.`profesor` (`ID_Profesor`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 -- -----------------------------------------------------
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `praini`.`seccion` (
     REFERENCES `praini`.`publicacion` (`ID_Publicacion`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8mb4_general_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
